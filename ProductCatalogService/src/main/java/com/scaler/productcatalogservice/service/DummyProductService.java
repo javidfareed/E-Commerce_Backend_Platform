@@ -3,7 +3,6 @@ package com.scaler.productcatalogservice.service;
 import com.scaler.productcatalogservice.dto.DummyJsonProductDto;
 import com.scaler.productcatalogservice.model.Category;
 import com.scaler.productcatalogservice.model.Product;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
