@@ -4,6 +4,8 @@ package com.scaler.productcatalogservice.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 public class Product extends BaseEntity{
@@ -12,7 +14,7 @@ public class Product extends BaseEntity{
 
     private String description;
 
-    private double price;
+    private BigDecimal price;
 
     private String imageUrl;
 
