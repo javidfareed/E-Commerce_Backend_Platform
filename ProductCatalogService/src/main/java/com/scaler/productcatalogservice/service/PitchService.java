@@ -2,6 +2,7 @@ package com.scaler.productcatalogservice.service;
 
 import com.scaler.productcatalogservice.dto.GroqPitchResponseDto;
 import com.scaler.productcatalogservice.model.Product;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class PitchService {
 
@@ -53,7 +55,8 @@ public class PitchService {
 
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            log.warn("Error in LLM call " + e.getMessage());
             return "New arrival: " + product.getName() +
                     " for just $" + product.getPrice() + ". Check it out!";
         }

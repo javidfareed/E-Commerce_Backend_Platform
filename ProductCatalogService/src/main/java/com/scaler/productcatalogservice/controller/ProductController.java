@@ -7,6 +7,7 @@ import com.scaler.productcatalogservice.dto.ProductPitchDto;
 import com.scaler.productcatalogservice.model.Product;
 import com.scaler.productcatalogservice.service.IProductService;
 import com.scaler.productcatalogservice.service.PitchService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +22,14 @@ import java.util.List;
 public class ProductController {
 
 
-    private IProductService productService;
-    private PitchService pitchService;
+    private final IProductService productService;
+    private final PitchService pitchService;
+    private final IProductService supplierService;
 
-    public ProductController(IProductService productService, PitchService pitchService) {
+    public ProductController(IProductService productService, PitchService pitchService, @Qualifier("dummyProductService") IProductService supplierService) {
         this.productService = productService;
         this.pitchService = pitchService;
+        this.supplierService = supplierService;
     }
 
     //API to get all products

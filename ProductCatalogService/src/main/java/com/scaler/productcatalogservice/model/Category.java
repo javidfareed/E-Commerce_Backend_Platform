@@ -3,6 +3,7 @@ package com.scaler.productcatalogservice.model;
 
 //category will be later highly modifiable, hence better to create them as a separate table instead of enum
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.util.List;
 @Entity
 public class Category extends BaseEntity {
 
+    @Column(unique = true,nullable = false)
     private String name;
 
     private String description;

@@ -1,10 +1,7 @@
 package com.scaler.productcatalogservice.model;
 
 import com.scaler.productcatalogservice.model.enums.State;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,5 +20,6 @@ public abstract class BaseEntity {
 
     private Date lastUpdatedAt;
 
+    @Enumerated(value = EnumType.STRING)
     private State state;
 }
