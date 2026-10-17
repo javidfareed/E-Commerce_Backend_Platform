@@ -80,7 +80,7 @@ public class ProductController {
 
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteProductById(@PathVariable Long id)
     {
         boolean isDeleted = storageService.deleteProductById(id);
@@ -89,6 +89,22 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto, @PathVariable Long id)
+    {
+        try {
+            Product product = storageService.updateProduct(productDto, id);
+            if (product == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(from(product), HttpStatus.OK);
+        }
+        catch (IllegalArgumentException e)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 

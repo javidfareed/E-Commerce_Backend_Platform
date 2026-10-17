@@ -69,6 +69,40 @@ public class StorageProductService implements IProductService{
 
     }
 
+    @Override
+    public Product updateProduct(ProductDto productDto, Long id) {
+
+        Product product = productRepository.findByIdAndState(id,State.ACTIVE).orElse(null);
+        if(product == null)
+        {
+            return null;
+        }
+
+        product.setName(productDto.getName());
+        product.setDescription(productDto.getDescription());
+        product.setPrice(productDto.getPrice());
+        product.setImageUrl(productDto.getImageUrl());
+        product.setLastUpdatedAt(new Date());
+
+        if(productDto.getCategory() == null)
+        {
+            product.setCategory(null);
+        }
+        else {
+            Optional<Category> optionalCategory = categoryRepository.findById(productDto.getCategory().getId());
+            if(optionalCategory.isEmpty())
+            {
+                throw new IllegalArgumentException("Invalid Category Id");
+            }
+            else {
+                product.setCategory(optionalCategory.get());
+            }
+        }
+
+        return productRepository.save(product);
+
+    }
+
     private Category findOrCreateCategory(Category category) {
         if(category == null)
         {
