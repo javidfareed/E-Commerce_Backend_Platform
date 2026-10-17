@@ -56,6 +56,11 @@ public class DummyProductService implements IProductService {
         return null;
     }
 
+    @Override
+    public Product updateProductField(ProductDto productDto, Long id) {
+        return null;
+    }
+
     private Product from(DummyJsonProductDto dto)
     {
         Product product = new Product();

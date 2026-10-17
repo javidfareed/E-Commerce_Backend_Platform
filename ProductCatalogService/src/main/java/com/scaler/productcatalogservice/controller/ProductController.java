@@ -107,6 +107,22 @@ public class ProductController {
 
     }
 
+    @PatchMapping("/{id}")
+    ResponseEntity<ProductDto> updateProductField(@RequestBody ProductDto productDto,@PathVariable Long id)
+    {
+        try {
+            Product product = storageService.updateProductField(productDto, id);
+            if (product == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(from(product), HttpStatus.OK);
+        }
+        catch (IllegalArgumentException e)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
     private ProductDto from(Product product)
     {

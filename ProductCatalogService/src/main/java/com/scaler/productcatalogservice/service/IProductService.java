@@ -13,4 +13,5 @@ public interface IProductService {
 
     Product updateProduct(ProductDto productDto, Long id);
 
+    Product updateProductField(ProductDto productDto, Long id);
 }
