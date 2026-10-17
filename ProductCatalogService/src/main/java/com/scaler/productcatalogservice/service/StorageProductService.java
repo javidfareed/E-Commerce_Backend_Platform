@@ -31,7 +31,7 @@ public class StorageProductService implements IProductService{
     public Product getProductById(Long id) {
 
         log.info("Reading from DB " + id);
-        return productRepository.findById(id).orElse(null);
+        return productRepository.findByIdAndState(id,State.ACTIVE).orElse(null);
     }
 
     public List<Product> getAllProducts()
@@ -51,6 +51,21 @@ public class StorageProductService implements IProductService{
         product.setState(State.ACTIVE);
 
         return productRepository.save(product);
+
+    }
+
+    @Override
+    public boolean deleteProductById(Long id) {
+
+        Product product = productRepository.findById(id).orElse(null);
+        if(product == null)
+        {
+            return false;
+        }
+        product.setState(State.INACTIVE);
+        product.setLastUpdatedAt(new Date());
+        productRepository.save(product);
+        return true;
 
     }
 

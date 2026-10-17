@@ -80,6 +80,16 @@ public class ProductController {
 
     }
 
+    @DeleteMapping("{id}")
+    ResponseEntity<Void> deleteProductById(@PathVariable Long id)
+    {
+        boolean isDeleted = storageService.deleteProductById(id);
+
+        if(isDeleted)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 
     private ProductDto from(Product product)

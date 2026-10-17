@@ -46,6 +46,11 @@ public class DummyProductService implements IProductService {
         return null;
     }
 
+    @Override
+    public boolean deleteProductById(Long id) {
+        return false;
+    }
+
     private Product from(DummyJsonProductDto dto)
     {
         Product product = new Product();
