@@ -1,6 +1,7 @@
 package com.scaler.productcatalogservice.service;
 
 import com.scaler.productcatalogservice.dto.DummyJsonProductDto;
+import com.scaler.productcatalogservice.dto.ProductDto;
 import com.scaler.productcatalogservice.model.Category;
 import com.scaler.productcatalogservice.model.Product;
 import org.springframework.boot.restclient.RestTemplateBuilder;
@@ -38,6 +39,11 @@ public class DummyProductService implements IProductService {
         }
 
 
+    }
+
+    @Override
+    public Product createProduct(ProductDto productDto) {
+        return null;
     }
 
     private Product from(DummyJsonProductDto dto)
