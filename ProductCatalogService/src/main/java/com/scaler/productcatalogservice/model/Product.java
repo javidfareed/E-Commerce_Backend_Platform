@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
+@Table(indexes = @Index(name = "idx_product_name" , columnList = "name"))
 public class Product extends BaseEntity{
 
     private String name;

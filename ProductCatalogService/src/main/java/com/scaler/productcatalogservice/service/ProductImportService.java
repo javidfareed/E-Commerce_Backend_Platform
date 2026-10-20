@@ -3,6 +3,7 @@ package com.scaler.productcatalogservice.service;
 import com.scaler.productcatalogservice.dto.CategoryDto;
 import com.scaler.productcatalogservice.dto.ProductDto;
 import com.scaler.productcatalogservice.model.Product;
+import com.scaler.productcatalogservice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ public class ProductImportService {
 
     private IProductService storageService;
     private IProductService supplierService;
+    private ProductRepository productRepository;
 
     public ProductImportService(IProductService storageService, @Qualifier("dummyProductService") IProductService supplierService) {
         this.storageService = storageService;
