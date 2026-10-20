@@ -6,11 +6,14 @@ import com.scaler.productcatalogservice.dto.ProductDto;
 import com.scaler.productcatalogservice.model.Category;
 import com.scaler.productcatalogservice.model.Product;
 import org.springframework.boot.restclient.RestTemplateBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +85,11 @@ public class DummyProductService implements IProductService {
 
     @Override
     public Product updateProductField(ProductDto productDto, Long id) {
+        return null;
+    }
+
+    @Override
+    public Page<Product> getProductsInPriceRange(BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
         return null;
     }
 
