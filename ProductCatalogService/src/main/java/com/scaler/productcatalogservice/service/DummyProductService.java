@@ -1,6 +1,7 @@
 package com.scaler.productcatalogservice.service;
 
 import com.scaler.productcatalogservice.dto.DummyJsonProductDto;
+import com.scaler.productcatalogservice.dto.DummyJsonProductListDto;
 import com.scaler.productcatalogservice.dto.ProductDto;
 import com.scaler.productcatalogservice.model.Category;
 import com.scaler.productcatalogservice.model.Product;
@@ -9,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DummyProductService implements IProductService {
@@ -38,6 +42,26 @@ public class DummyProductService implements IProductService {
 
         }
 
+
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+
+        String url = "https://dummyjson.com/products?limit=0";
+
+        ResponseEntity<DummyJsonProductListDto> response = restTemplate.getForEntity(url, DummyJsonProductListDto.class);
+
+        List<Product> products = new ArrayList<>();
+
+        List<DummyJsonProductDto> dummyJsonProductDtos = response.getBody().getProducts();
+
+        for(DummyJsonProductDto dto : dummyJsonProductDtos)
+        {
+            products.add(from(dto));
+        }
+
+        return products;
 
     }
 
