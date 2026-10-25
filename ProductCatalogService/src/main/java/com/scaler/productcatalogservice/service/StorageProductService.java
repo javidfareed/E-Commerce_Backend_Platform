@@ -1,11 +1,13 @@
 package com.scaler.productcatalogservice.service;
 
 import com.scaler.productcatalogservice.dto.ProductDto;
+import com.scaler.productcatalogservice.mappers.ProductMapper;
 import com.scaler.productcatalogservice.model.Category;
 import com.scaler.productcatalogservice.model.Product;
 import com.scaler.productcatalogservice.model.enums.State;
 import com.scaler.productcatalogservice.repository.CategoryRepository;
 import com.scaler.productcatalogservice.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -20,15 +22,18 @@ import java.util.Optional;
 @Service
 @Primary
 @Slf4j
+@RequiredArgsConstructor
 public class StorageProductService implements IProductService{
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ProductMapper productMapper;
 
-    public StorageProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
-        this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
-    }
+//    public StorageProductService(ProductRepository productRepository, CategoryRepository categoryRepository, ProductMapper productMapper) {
+//        this.productRepository = productRepository;
+//        this.categoryRepository = categoryRepository;
+//        this.productMapper = productMapper;
+//    }
 
     @Override
     public Product getProductById(Long id) {
@@ -47,7 +52,7 @@ public class StorageProductService implements IProductService{
         //Dto --> entity
         //Category check and save to repo
 
-        Product product = from(productDto);
+        Product product = productMapper.toEntity(productDto);
         product.setCategory(findOrCreateCategory(product.getCategory()));
         product.setCreatedAt(new Date());
         product.setLastUpdatedAt(new Date());
@@ -172,23 +177,4 @@ public class StorageProductService implements IProductService{
         return category;
     }
 
-
-    private Product from(ProductDto dto)
-    {
-         Product product = new Product();
-         product.setName(dto.getName());
-         product.setDescription(dto.getDescription());
-         product.setPrice(dto.getPrice());
-         product.setImageUrl(dto.getImageUrl());
-
-         if(dto.getCategory() != null)
-         {
-             Category category = new Category();
-             category.setName(dto.getCategory().getName());
-             category.setDescription(dto.getCategory().getDescription());
-             product.setCategory(category);
-         }
-
-         return product;
-    }
 }
