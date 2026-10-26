@@ -1,7 +1,6 @@
 package com.scaler.productcatalogservice.controller;
 
 
-import com.scaler.productcatalogservice.dto.CategoryDto;
 import com.scaler.productcatalogservice.dto.ProductDto;
 import com.scaler.productcatalogservice.dto.ProductPitchDto;
 import com.scaler.productcatalogservice.mappers.ProductMapper;
