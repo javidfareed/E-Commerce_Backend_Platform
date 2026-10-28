@@ -14,7 +14,7 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    //Jwt service needs key and expiry time
+    //Jwt service needs Secretkey and expiry time
 
     private final SecretKey key;
     private final long expirySeconds;
