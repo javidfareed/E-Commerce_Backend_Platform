@@ -36,6 +36,13 @@ public class ProductController {
         this.productMapper = productMapper;
     }
 
+    //Health check
+    @GetMapping("/healthcheck")
+    ResponseEntity<String> healthCheck()
+    {
+        return ResponseEntity.ok("OK");
+    }
+
     //API to get all products
     @GetMapping
     ResponseEntity<List<ProductDto>> getAllProducts()
