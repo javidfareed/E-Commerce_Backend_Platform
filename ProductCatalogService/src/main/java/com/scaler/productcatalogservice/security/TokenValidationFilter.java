@@ -1,5 +1,6 @@
 package com.scaler.productcatalogservice.security;
 
+import com.scaler.productcatalogservice.clients.AuthClient;
 import com.scaler.productcatalogservice.dto.AuthUserDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -10,6 +11,7 @@ import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -19,13 +21,10 @@ import java.io.IOException;
 @Component
 public class TokenValidationFilter extends OncePerRequestFilter {
 
-    //We need the url to communicate UserAuth microservice to validate token
-    private final String authServiceUrl;
-    private final RestTemplate restTemplate;
+    private final AuthClient authClient;
 
-    public TokenValidationFilter(@Value("${auth.service.url}") String authServiceUrl, RestTemplateBuilder restTemplateBuilder) {
-        this.authServiceUrl = authServiceUrl;
-        this.restTemplate = restTemplateBuilder.build();
+    public TokenValidationFilter(AuthClient authClient) {
+        this.authClient = authClient;
     }
 
     @Override
@@ -49,14 +48,7 @@ public class TokenValidationFilter extends OncePerRequestFilter {
         //validate token for requests other than GET
         AuthUserDto authUserDto;
         try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", header);
-            ResponseEntity<AuthUserDto> answer = restTemplate.exchange(
-                    authServiceUrl+"/auth/validateToken",
-                    HttpMethod.GET,
-                    new HttpEntity<>(headers),
-                    AuthUserDto.class);
-            authUserDto = answer.getBody();
+            authUserDto = authClient.validateToken(header);
         }
         catch(HttpClientErrorException.Unauthorized e)
         {

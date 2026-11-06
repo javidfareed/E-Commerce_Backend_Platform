@@ -1,5 +1,6 @@
 package com.scaler.productcatalogservice.service;
 
+import com.scaler.productcatalogservice.clients.GroqClient;
 import com.scaler.productcatalogservice.dto.GroqPitchResponseDto;
 import com.scaler.productcatalogservice.model.Product;
 import lombok.extern.slf4j.Slf4j;
@@ -19,23 +20,16 @@ import java.util.Map;
 @Service
 public class PitchService {
 
-    private static final String GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
     private static final String MODEL = "openai/gpt-oss-20b";
     private static final String SYSTEM_PROMPT = "You are a marketing copywriter for ShopNest, an online store. You write short push notifications that make people want to open the app.";
 
-    private final RestTemplate restTemplate;
-    private final String apiKey;
+    private final GroqClient groqClient;
 
-    public PitchService(RestTemplateBuilder restTemplateBuilder,@Value("${groq.api-key}") String apiKey) {
-        this.restTemplate = restTemplateBuilder.build();
-        this.apiKey = apiKey;
+    public PitchService(GroqClient groqClient) {
+        this.groqClient = groqClient;
     }
 
     public String generatePitch(Product product) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(apiKey);
-        headers.setContentType(MediaType.APPLICATION_JSON);
 
         try {
             Map<String,Object> body = Map.of("model",MODEL,"reasoning_effort" ,"low","max_completion_tokens",300,
@@ -45,13 +39,10 @@ public class PitchService {
                     )
             );
 
-            ResponseEntity<GroqPitchResponseDto> response = restTemplate.postForEntity(GROQ_URL,new HttpEntity<>(body,headers), GroqPitchResponseDto.class);
-            if(response.getStatusCode().is2xxSuccessful() && response.hasBody())
-            {
-                return response.getBody().getChoices().get(0).getMessage().getContent();
-            }
+            GroqPitchResponseDto response = groqClient.chat(body);
 
-            throw new IllegalArgumentException("Pitch couldn't be generated");
+            String pitch = response.getChoices().get(0).getMessage().getContent();
+            return pitch;
 
 
         } catch (Exception e) {
