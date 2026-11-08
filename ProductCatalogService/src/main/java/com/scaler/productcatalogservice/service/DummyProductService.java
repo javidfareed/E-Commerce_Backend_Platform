@@ -5,13 +5,11 @@ import com.scaler.productcatalogservice.dto.DummyJsonProductListDto;
 import com.scaler.productcatalogservice.dto.ProductDto;
 import com.scaler.productcatalogservice.model.Category;
 import com.scaler.productcatalogservice.model.Product;
-import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,10 +19,10 @@ import java.util.List;
 public class DummyProductService implements IProductService {
 
 
-    private RestTemplate restTemplate;
+    private final RestClient restClient;
 
-    public DummyProductService(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.build();
+    public DummyProductService(RestClient.Builder builder) {
+        this.restClient = builder.build();
     }
 
     @Override
@@ -32,10 +30,13 @@ public class DummyProductService implements IProductService {
 
         try {
             String url = "https://dummyjson.com/products/{id}";
-            ResponseEntity<DummyJsonProductDto> response = restTemplate.getForEntity(url, DummyJsonProductDto.class,id);
-            if(response.getStatusCode().is2xxSuccessful() && response.hasBody())
+            DummyJsonProductDto dto = restClient.get()
+                    .uri(url, id)
+                    .retrieve()
+                    .body(DummyJsonProductDto.class);
+            if (dto != null)
             {
-                return from(response.getBody());
+                return from(dto);
             }
 
             return null;
@@ -53,11 +54,14 @@ public class DummyProductService implements IProductService {
 
         String url = "https://dummyjson.com/products?limit=0";
 
-        ResponseEntity<DummyJsonProductListDto> response = restTemplate.getForEntity(url, DummyJsonProductListDto.class);
+        DummyJsonProductListDto response = restClient.get()
+                .uri(url)
+                .retrieve()
+                .body(DummyJsonProductListDto.class);
 
         List<Product> products = new ArrayList<>();
 
-        List<DummyJsonProductDto> dummyJsonProductDtos = response.getBody().getProducts();
+        List<DummyJsonProductDto> dummyJsonProductDtos = response.getProducts();
 
         for(DummyJsonProductDto dto : dummyJsonProductDtos)
         {
