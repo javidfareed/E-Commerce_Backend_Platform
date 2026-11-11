@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/products")
@@ -58,12 +59,8 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long id)
+    ResponseEntity<ProductDto> getProductById(@PathVariable("id") UUID id)
     {
-        if(id < 0)
-        {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         Product product = productService.getProductById(id);
         if(product ==  null)
         {
@@ -73,13 +70,8 @@ public class ProductController {
     }
 
     @GetMapping("/{id}/pitch")
-    ResponseEntity<ProductPitchDto> generatePitch(@PathVariable("id") Long id)
+    ResponseEntity<ProductPitchDto> generatePitch(@PathVariable("id") UUID id)
     {
-       if(id<0)
-       {
-           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-       }
-
        Product product = productService.getProductById(id);
        if(product == null)
        {
@@ -102,7 +94,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteProductById(@PathVariable Long id)
+    ResponseEntity<Void> deleteProductById(@PathVariable UUID id)
     {
         boolean isDeleted = productService.deleteProductById(id);
 
@@ -113,7 +105,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto, @PathVariable Long id)
+    ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto, @PathVariable UUID id)
     {
         try {
             Product product = productService.updateProduct(productDto, id);
@@ -129,7 +121,7 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
-    ResponseEntity<ProductDto> updateProductField(@RequestBody ProductDto productDto,@PathVariable Long id)
+    ResponseEntity<ProductDto> updateProductField(@RequestBody ProductDto productDto,@PathVariable UUID id)
     {
         try {
             Product product = productService.updateProductField(productDto, id);

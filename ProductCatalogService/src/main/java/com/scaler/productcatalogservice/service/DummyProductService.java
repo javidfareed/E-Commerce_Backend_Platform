@@ -14,6 +14,7 @@ import org.springframework.web.client.RestClient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class DummyProductService implements IProductService {
@@ -25,28 +26,11 @@ public class DummyProductService implements IProductService {
         this.restClient = builder.build();
     }
 
+    //Below method will not work as we changed from Long to UUID - returns 404 always
+    //dummyjson only knows its own numbers, not our UUIDs, so it cannot look a product up by our id
     @Override
-    public Product getProductById(Long id) {
-
-        try {
-            String url = "https://dummyjson.com/products/{id}";
-            DummyJsonProductDto dto = restClient.get()
-                    .uri(url, id)
-                    .retrieve()
-                    .body(DummyJsonProductDto.class);
-            if (dto != null)
-            {
-                return from(dto);
-            }
-
-            return null;
-        } catch (HttpClientErrorException.NotFound e) {
-
-            return null;
-
-        }
-
-
+    public Product getProductById(UUID id) {
+        return null;
     }
 
     @Override
@@ -78,17 +62,17 @@ public class DummyProductService implements IProductService {
     }
 
     @Override
-    public boolean deleteProductById(Long id) {
+    public boolean deleteProductById(UUID id) {
         return false;
     }
 
     @Override
-    public Product updateProduct(ProductDto productDto, Long id) {
+    public Product updateProduct(ProductDto productDto, UUID id) {
         return null;
     }
 
     @Override
-    public Product updateProductField(ProductDto productDto, Long id) {
+    public Product updateProductField(ProductDto productDto, UUID id) {
         return null;
     }
 
@@ -100,7 +84,6 @@ public class DummyProductService implements IProductService {
     private Product from(DummyJsonProductDto dto)
     {
         Product product = new Product();
-        product.setId(dto.getId());
         product.setDescription(dto.getDescription());
         product.setName(dto.getTitle());
         product.setPrice(dto.getPrice());
