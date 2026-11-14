@@ -4,5 +4,7 @@
     <file url="file://$PROJECT_DIR$/ProductCatalogService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ProductCatalogService/src/main/resources/db/migration/V1__baseline.sql" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UserAuthService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/catalog-mcp/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/catalog-mcp/src/main/resources" charset="UTF-8" />
   </component>
 </project>

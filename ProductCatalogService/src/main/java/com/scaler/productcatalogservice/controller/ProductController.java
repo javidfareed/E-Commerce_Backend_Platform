@@ -3,7 +3,7 @@ package com.scaler.productcatalogservice.controller;
 
 import com.scaler.productcatalogservice.dto.ProductDto;
 import com.scaler.productcatalogservice.dto.ProductPitchDto;
-import com.scaler.productcatalogservice.mappers.ProductMapper;
+import com.scaler.productcatalogservice.mapper.ProductMapper;
 import com.scaler.productcatalogservice.model.Product;
 import com.scaler.productcatalogservice.service.IProductService;
 import com.scaler.productcatalogservice.service.PitchService;
@@ -27,13 +27,15 @@ public class ProductController {
 
     private final IProductService productService;
     private final PitchService pitchService;
-    private final IProductService supplierService;
+    //private final IProductService supplierService;
     private final ProductMapper productMapper;
 
-    public ProductController(IProductService productService, PitchService pitchService, @Qualifier("dummyProductService") IProductService supplierService, ProductMapper productMapper) {
+    public ProductController(IProductService productService, PitchService pitchService,
+                             //@Qualifier("dummyProductService") IProductService supplierService,
+                             ProductMapper productMapper) {
         this.productService = productService;
         this.pitchService = pitchService;
-        this.supplierService = supplierService;
+        //this.supplierService = supplierService;
         this.productMapper = productMapper;
     }
 

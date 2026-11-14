@@ -1,4 +1,4 @@
-package com.scaler.productcatalogservice.mappers;
+package com.scaler.productcatalogservice.mapper;
 
 import com.scaler.productcatalogservice.dto.CategoryDto;
 import com.scaler.productcatalogservice.dto.ProductDto;

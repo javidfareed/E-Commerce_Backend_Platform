@@ -1,7 +1,7 @@
 package com.scaler.productcatalogservice.service;
 
 import com.scaler.productcatalogservice.dto.ProductDto;
-import com.scaler.productcatalogservice.mappers.ProductMapper;
+import com.scaler.productcatalogservice.mapper.ProductMapper;
 import com.scaler.productcatalogservice.model.Category;
 import com.scaler.productcatalogservice.model.Product;
 import com.scaler.productcatalogservice.model.enums.State;

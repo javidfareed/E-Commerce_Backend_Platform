@@ -1,4 +1,4 @@
-package com.scaler.productcatalogservice.UtilsTests;
+package com.scaler.productcatalogservice.UtilTests;
 
 import com.scaler.productcatalogservice.util.ArrayUtils;
 import org.junit.jupiter.api.DisplayName;
