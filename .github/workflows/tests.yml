@@ -37,6 +37,9 @@ jobs:
           cache: maven
 
       - name: Run unit tests and JaCoCo report
+        env:
+          DB_PASSWORD: root
+          GROQ_API_KEY: dummy-test-key
         run: |
           chmod +x mvnw
           ./mvnw -B clean test -Dtest='!ProductCatalogServiceApplicationTests,!ProductSearchIntegrationTest'
