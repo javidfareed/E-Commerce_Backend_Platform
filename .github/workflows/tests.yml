@@ -42,7 +42,7 @@ jobs:
           GROQ_API_KEY: dummy-test-key
         run: |
           chmod +x mvnw
-          ./mvnw -B clean test -Dtest='!ProductCatalogServiceApplicationTests,!ProductSearchIntegrationTest'
+          ./mvnw -B clean verify
           
 
       - name: Upload JaCoCo report
